@@ -3,6 +3,8 @@
 #include "pList.h"
 #include "vector.h"
 #include "Directory.h"
+#include "matrix.h"
+#include "GenericTree.h"
 
 void testList(){
     auto list = pList<int>();
@@ -31,7 +33,7 @@ void busort(Vector<int>v, int dim){
 }
 
 void sort(){
-    Vector<int> v = Vector<int>();
+    Vector<int> v = Vector<int>(100);
     for(int i=99,j=0; i>=0; i--,j++)
         v[j] = i;
     v.print(100);
@@ -40,9 +42,7 @@ void sort(){
     v.print(100);
 }
 
-
-
-int main (){
+void testdir(){
     shared_ptr<Directory> roota = Directory::getroot();
     roota->addDirectory("dir1");
     roota->addDirectory("dir2");
@@ -51,4 +51,24 @@ int main (){
     std::cout<<roota->getFile("filone")->getSize()<<"\n";
     roota->remove("filone");
     roota->ls(0);
+}
+
+void testmatrix(){
+    Matrix<int> m = Matrix<int>(10,10);
+    for(int i=0; i<10; i++)
+        for(int j=0; j<10; j++)
+            m[i][j] = i*j;
+    for(int i=0; i<10; i++) {
+        for (int j = 0; j < 10; j++)
+            cout << m[i][j] % 10 << " ";
+        cout << "\n";
+    }
+}
+
+
+int main (){
+    GenericTree<int, int> rt(2, 3);
+    rt.add_child(1, 2).add_child(2, 9).add_child(0, 10);
+    cout <<  *rt[2] << "\n";
+
 }

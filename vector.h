@@ -13,7 +13,12 @@ private:
     T* arr;
 public:
         Vector(){
-            size=10;
+            size = 0;
+            arr = nullptr;
+        }
+
+        explicit Vector(int dim){
+            size=dim;
             arr = new T[size];
         }
 
@@ -23,9 +28,51 @@ public:
             arr = nullptr;
         }
 
+        Vector(const Vector &v1){
+            size = v1.size;
+            arr = new T[size];
+            for(int i=0; i<size; i++){
+                arr[i] = v1.arr[i];
+            }
+        }
+
+        Vector(Vector &&v1) noexcept {
+            size = v1.size;
+            arr = v1.arr;
+            v1.arr = nullptr;
+        }
+
+        Vector& operator=(Vector<int> v1){
+            if(arr!=v1.arr){
+                if (arr != nullptr){
+                    delete[] arr;
+                    size = v1.size;
+                    v1.size = 0;
+                    arr = new T[size];
+                    for (int i = 0; i < size; i++){
+                        arr[i] = v1[i];
+                    }
+                }
+            }
+            return *this;
+        }
+
+        Vector& operator=(Vector &&v1) noexcept {
+            if(arr!=v1.arr){
+                delete[] arr;
+                arr = v1.arr;
+                size = v1.size;
+                v1.arr = nullptr;
+                v1.size = 0;
+            }
+            else{
+                v1.arr = nullptr;
+                v1.size = 0;
+            }
+            return *this;
+        }
+
         T& operator[](int i){
-            if(i >= size-1)
-                resize(size+size/2);
             return arr[i];
         }
 
@@ -48,7 +95,5 @@ public:
 
 
 };
-
-
 
 #endif //LAB2_VECTOR_H

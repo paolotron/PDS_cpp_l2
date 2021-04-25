@@ -47,6 +47,6 @@ public:
 
 
 };
-static shared_ptr<Directory> root;
+static shared_ptr<Directory> root = nullptr;
 
 #endif //LAB2_DIRECTORY_H

@@ -33,7 +33,6 @@ shared_ptr<Directory> Directory::addChild(const string& c_name) {
     n_childs++;
     return child;
 }
-
 shared_ptr<Base> Directory::get(const string& address){
     int i = 0;
     int j = 0;
